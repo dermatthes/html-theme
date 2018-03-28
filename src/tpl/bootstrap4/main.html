@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{= title }</title>
+        <style type="text/css">{= sec.css | singleLine | raw }</style>
+    </head>
+
+    <body>
+
+        {= sec.body | raw}
+
+        <script language="JavaScript">{= sec.js | singleLine | raw}</script>
+    </body>
+</html>

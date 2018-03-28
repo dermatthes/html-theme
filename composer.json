@@ -1,0 +1,21 @@
+{
+  "name": "html/theme",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Matthias Leuffen",
+      "email": "matthias@leuffen.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "HtmlTheme\\": "src/"
+    }
+  },
+  "require": {
+    "text/template": "*",
+    "psr/http-message": "^1.0"
+  },
+  "minimum-stability": "dev"
+}
