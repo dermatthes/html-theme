@@ -157,6 +157,7 @@
         }
 
 
+
         public function end() : self {
             if ($this->curNode->getParent() === $this->curNode)
                 throw new \InvalidArgumentException("end(): Node is document node.");
