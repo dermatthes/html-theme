@@ -11,7 +11,9 @@
     use HtmlTheme\Elements\DocumentNode;
     use HtmlTheme\Elements\HtmlContainerElement;
     use HtmlTheme\Elements\HtmlElement;
+    use HtmlTheme\Elements\RawHtmlNode;
     use HtmlTheme\Elements\TextNode;
+    use HtmlTheme\Theme;
 
     /**
      * Class FHtml
@@ -22,8 +24,10 @@
      * @method $this p(...$params)
      * @method $this b(...$params)
      * @method $this h1(...$params)
-     * @method h2 $this
-     * @method h3 $this
+     * @method $this h2(...$params)
+     * @method $this h3(...$params)
+     * @method $this h4(...$params)
+     * @method $this hr(...$params)
      *
      */
     class FHtml {
@@ -42,7 +46,13 @@
 
         private $emptyTags = ["meta"=>true, "img"=>true, "br"=>true, "hr"=>true, "input"=>true, "link"=>true];
 
-        public function __construct() {
+        /**
+         * @var Theme
+         */
+        private $theme;
+
+        public function __construct(Theme $theme) {
+            $this->theme = $theme;
             $this->documentNode = new DocumentNode();
             $this->curNode = $this->documentNode;
         }
@@ -127,8 +137,22 @@
             return $this->cloneit($newNode);
         }
 
+        /**
+         * @param string $name
+         * @param array  $data
+         *
+         * @return string
+         */
+        public function template(string $name, array $data = []) : self
+        {
+            $textTemplate = $this->theme->buildTextTemplate();
+            $textTemplate->loadTemplate($this->theme->_getTemplate($name));
+            $this->curNode->add(new RawHtmlNode($textTemplate->apply($data)));
+            return $this;
+        }
+
         private function cloneit ($curNode) : FHtml {
-            $new = new self();
+            $new = new self($this->theme);
             $new->jumpMarks =& $this->jumpMarks;
             $new->curNode = $curNode;
             $new->documentNode = $this->documentNode;

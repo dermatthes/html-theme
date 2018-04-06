@@ -21,5 +21,9 @@ return new \HtmlTheme\Theme(
         ]
     ],
     ["body"],
-    ["title", "author", "keywords"]
+    ["title", "author", "keywords"],
+    [
+        "navbar" => __DIR__ . "/template/navbar.tpl.html"
+    ]
+
 );

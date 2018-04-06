@@ -44,15 +44,13 @@ class ThemeSection
         return $this;
     }
 
-
-
     public function fhtml(...$params) : FHtml
     {
-        $this->content[] = $ret = new FHtml();
+        $this->content[] = $ret = new FHtml($this->parentTheme);
+        if (count ($params) == 0)
+            return $ret;
         return $ret->elem(...$params);
     }
-
-
 
     public function isEmpty() : bool
     {

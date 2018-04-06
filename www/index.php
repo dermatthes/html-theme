@@ -16,12 +16,16 @@ use HtmlTheme\ThemeFactory;
 $theme = ThemeFactory::Load("bootstrap4");
 
 $theme->section("body")
-    ->fhtml("nav @class=navbar navbar-expand-lg navbar-light bg-light")
+    ->fhtml()
+    ->template("navbar")
+    ->elem("nav @class=navbar navbar-expand-lg navbar-light bg-light")
         ->elem("a @class=navbar-brand href=#")->text("HtmlTheme")->end()
+        ->elem("a @class=")->end()
     ->end()
 
-    ->elem("div @class=jumbotron")
-        ->h1()->text("Fehler")->end()
-        ->p()->text("Dies ist das Ende");
+    ->elem("div @class=alert alert-success")
+        ->h4("@class=alert-heading")->text("Fehler")->end()
+        ->hr()->end()
+        ->p("@class=mb0")->text("Dies ist das Ende");
 
 echo $theme->renderToString();

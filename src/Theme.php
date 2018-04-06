@@ -22,12 +22,13 @@ class Theme
      */
     private $sections;
     private $placeholder;
+    private $templates;
 
-    public function __construct(string $mainTemplate, array $scope, array $sections, array $placeholder, self $extends = null)
+    public function __construct(string $mainTemplate, array $scope, array $sections, array $placeholder, array $templates, self $extends = null)
     {
         $this->mainTemplate = $mainTemplate;
         $this->scope = $scope;
-
+        $this->templates = $templates;
         // Register sections
         foreach ($sections as $key => $value) {
             if (is_numeric($key)) {
@@ -39,6 +40,14 @@ class Theme
     }
 
 
+    public function _getTemplate (string $name) : string
+    {
+        if ( ! isset ($this->templates[$name]))
+            throw new \InvalidArgumentException("No template '$name' registered for this theme");
+        return file_get_contents($this->templates[$name]);
+    }
+
+
 
     public function section($name) : ThemeSection
     {
@@ -47,6 +56,14 @@ class Theme
         if ( ! $this->sections[$name] instanceof ThemeSection)
             $this->sections[$name] = new ThemeSection($this);
         return $this->sections[$name];
+    }
+
+
+    public function buildTextTemplate () : TextTemplate
+    {
+        $textTemplate = new TextTemplate();
+        $textTemplate->addPlugin(new ThemeTemplateFunctionsPlugin());
+        return $textTemplate;
     }
 
 
@@ -64,8 +81,8 @@ class Theme
             $scope["sec"][$name] = $val->getContent();
         }
 
-        $textTemplate = new TextTemplate($this->mainTemplate);
-        $textTemplate->addPlugin(new ThemeTemplateFunctionsPlugin());
+        $textTemplate = $this->buildTextTemplate();
+        $textTemplate->loadTemplate($this->mainTemplate);
         return $textTemplate->apply($scope, false);
     }
 
