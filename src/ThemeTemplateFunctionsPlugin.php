@@ -24,9 +24,21 @@ class ThemeTemplateFunctionsPlugin implements TextTemplatePlugin
         return $input;
     }
 
+    public function fnSwitch($paramArr, $command, $context)
+    {
+        $defaults = "";
+        if (isset ($paramArr["default"]))
+            $defaults = $paramArr["default"];
+
+        if (!isset ($paramArr["src"]) || $paramArr["src"] == null)
+            return $defaults;
+        return $paramArr["src"];
+    }
+
     public function registerPlugin(TextTemplate $textTemplate)
     {
         $textTemplate->addFilter("compactJs", [$this, "filterCompactJs"]);
+        $textTemplate->addFunction("switch", [$this, "fnSwitch"]);
     }
 
 

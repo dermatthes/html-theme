@@ -7,6 +7,7 @@
  */
 
 return [
+    "class" => "navbar-light bg-primary",
     "title" => "Some Title",
     "titleImg" => \HtmlTheme\Helper\DataUrl::FromFile(__DIR__ . "/bootstrap-solid.svg"),
     "titleHref" => "#",
