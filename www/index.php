@@ -16,16 +16,24 @@ use HtmlTheme\ThemeFactory;
 $theme = ThemeFactory::Load("bootstrap4");
 
 $theme->section("body")
-    ->fhtml()
-    ->template("navbar")
-    ->elem("nav @class=navbar navbar-expand-lg navbar-light bg-light")
-        ->elem("a @class=navbar-brand href=#")->text("HtmlTheme")->end()
-        ->elem("a @class=")->end()
-    ->end()
+    ->fhtml("div @class=container")
+        ->h1()->text("Navbars")->end()
+        ->p("@class=lead")->text("Welcome to the wonderful world of templates")->end()
 
-    ->elem("div @class=alert alert-success")
-        ->h4("@class=alert-heading")->text("Fehler")->end()
-        ->hr()->end()
-        ->p("@class=mb0")->text("Dies ist das Ende");
+        ->h2()->text("Top navbar from template")->end()
+        ->template("navbar", require __DIR__ . "/navbar.ser.php")
+
+        ->h2()->text("Top navbar programmatic")->end()
+        ->elem("nav @class=navbar navbar-expand-lg navbar-light bg-light")
+            ->elem("a @class=navbar-brand href=#")->text("HtmlTheme")->end()
+            ->elem("a @class=")->end()
+        ->end()
+
+        ->h2()->text("Alert")->end()
+        ->p()->text("")->end()
+        ->elem("div @class=alert alert-success")
+            ->h4("@class=alert-heading")->text("Fehler")->end()
+            ->hr()->end()
+            ->p("@class=mb0")->text("Dies ist das Ende");
 
 echo $theme->renderToString();

@@ -17,7 +17,10 @@ return new \HtmlTheme\Theme(
             "css" => file_get_contents(B4D . "css/bootstrap.min.css") .
                 file_get_contents(B4D . "css/bootstrap-reboot.min.css") .
                 file_get_contents(B4D . "css/bootstrap-grid.min.css"),
-            "js"  => file_get_contents(B4D . "js/bootstrap.bundle.js")
+            "js"  =>
+                file_get_contents(B4D . "js/jquery-3.3.1.min.js") . ";" .
+                file_get_contents(B4D . "js/bootstrap.bundle.js") . ";" .
+                file_get_contents(__DIR__ . "/all-elements.js")
         ]
     ],
     ["body"],
